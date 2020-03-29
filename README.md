@@ -10,16 +10,16 @@ In this section we describe the usage of the program:
                 [-o OUTPUT] [-t TYPE_COL] [-v VIEW]
 
 optional arguments:
-  -h, --help            show this help message and exit
-  -c COUNTRIES [COUNTRIES ...], --countries COUNTRIES [COUNTRIES ...]
+        -h, --help            show this help message and exit
+        -c COUNTRIES [COUNTRIES ...], --countries COUNTRIES [COUNTRIES ...]
                         <Required> Set flag
-  -d DAYS, --days DAYS  How many days from D0
-  -D DPI, --DPI DPI     Output DPI
-  -o OUTPUT, --output OUTPUT
+        -d DAYS, --days DAYS  How many days from D0
+        -D DPI, --DPI DPI     Output DPI
+        -o OUTPUT, --output OUTPUT
                         Output to save PNG
-  -t TYPE_COL, --type_col TYPE_COL
+        -t TYPE_COL, --type_col TYPE_COL
                         Type of case: confirmed, recovered, deaths
-  -v VIEW, --view VIEW  View result: yes(y) or no(n)
+        -v VIEW, --view VIEW  View result: yes(y) or no(n)
 
 The following is the example of the generated png inside png folder:
 
