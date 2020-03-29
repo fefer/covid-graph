@@ -12,17 +12,20 @@ try:
   os.mkdir('./main/')
 except:
   pass
-
 parser = argparse.ArgumentParser()
 parser.add_argument('-c','--countries', nargs='+', help='<Required> Set flag', required=True)
-parser.add_argument('-d', '--days', help='     How many days from D0', default = '')
-parser.add_argument('-t', '--type_col', help='     Type of case: confirmed, recovered, deaths', default = 'confirmed')
-parser.add_argument('-v', '--view', help='     View result: yes(y) or no(n)')
+parser.add_argument('-d', '--days', help='How many days from D0', default = '')
+parser.add_argument('-D', '--DPI', help='Output DPI', default = '320')
+parser.add_argument('-o', '--output', help='Output to save PNG', default = './png')
+parser.add_argument('-t', '--type_col', help='Type of case: confirmed, recovered, deaths', default = 'confirmed')
+parser.add_argument('-v', '--view', help='View result: yes(y) or no(n)', default = 'no')
 args = parser.parse_args()
 countries = args.countries
 col = args.type_col
 days = args.days
 view = args.view
+dpi_v = args.DPI
+out = args.output
 type_col = {
   "confirmed": "2",
   "recovered": "3",
@@ -77,8 +80,14 @@ name = ""
 for i in countries:
   name = str(i) + "_" + name
 name = name + str(col)
-plt.savefig('./png/%s.png' %(name), dpi=1200)
+plt.savefig('%s/%s.png' %(out,name), dpi=int(dpi_v))
 
 if view == 'y' or view == 'yes': 
   # function to show the plot 
   plt.show() 
+try:
+  shutil.rmtree('./main/')
+  os.mkdir('./main/')
+except:
+  pass
+
