@@ -7,22 +7,29 @@ import csv
 import argparse
 
 f = open('./covid-19/data/countries-aggregated.csv','r')
-
-os.system('rm ./main/*')
+try:
+  shutil.rmtree('./main/')
+  os.mkdir('./main/')
+except:
+  pass
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-c','--countries', nargs='+', help='<Required> Set flag', required=True)
-parser.add_argument('-t', '--type_col', help='shows output', default = 'confirmed')
-parser.add_argument('-d', '--days', help='shows output', default = '')
+parser.add_argument('-d', '--days', help='     How many days from D0', default = '')
+parser.add_argument('-t', '--type_col', help='     Type of case: confirmed, recovered, deaths', default = 'confirmed')
+parser.add_argument('-v', '--view', help='     View result: yes(y) or no(n)')
 args = parser.parse_args()
 countries = args.countries
 col = args.type_col
 days = args.days
-
+view = args.view
 type_col = {
   "confirmed": "2",
   "recovered": "3",
-  "deaths": "4"
+  "deaths": "4",
+  "Confirmed": "2",
+  "Recovered": "3",
+  "Deaths": "4"
 }
 num = type_col.get(col)
 for line in f:
@@ -34,7 +41,10 @@ for line in f:
 
 count = 0
 point = ['b', 'g', 'r', 'c', 'm', 'y', 'k', '#e377c2']
+symbols = ['<', '>', '.', 's', '*', 'p', 'D', 'v']
+name=[]
 for i in countries:
+  size = countries.index(i)
   data = csv.reader(open('./main/%s.csv' %(i), 'r'), delimiter=",", quotechar='|')
   column1 = []
   for row in data:
@@ -52,7 +62,7 @@ for i in countries:
     y = column1[:int(days)]
     
   # plotting points as a scatter plot 
-  plt.scatter(x, y, label= i, color= point[count], marker= "*", s=20) 
+  plt.scatter(x, y, label= i, color= point[count], marker= symbols[count], s=55 - (size*6)) 
   count = count + 1
 
 # x-axis label 
@@ -62,7 +72,13 @@ plt.ylabel('y - %s cases' %(col))
 # plot title 
 plt.title('Days from the beginning vs %s cases' %(col)) 
 # showing legend 
-plt.legend() 
-  
-# function to show the plot 
-plt.show() 
+plt.legend()
+name = "" 
+for i in countries:
+  name = str(i) + "_" + name
+name = name + str(col)
+plt.savefig('./png/%s.png' %(name), dpi=1200)
+
+if view == 'y' or view == 'yes': 
+  # function to show the plot 
+  plt.show() 
