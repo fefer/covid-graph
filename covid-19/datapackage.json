@@ -1,0 +1,346 @@
+{
+  "bytes": 1214597,
+  "count_of_rows": 30660,
+  "hash": "6e470cda01822d494f144052c2b9af4f",
+  "name": "covid-19",
+  "profile": "data-package",
+  "resources": [
+    {
+      "bytes": 853853,
+      "dialect": {
+        "caseSensitiveHeader": false,
+        "delimiter": ",",
+        "doubleQuote": true,
+        "header": true,
+        "lineTerminator": "\r\n",
+        "quoteChar": "\"",
+        "skipInitialSpace": false
+      },
+      "encoding": "utf-8",
+      "format": "csv",
+      "hash": "d7f9552e95e45284b03611022c39eac3",
+      "name": "time-series-19-covid-combined",
+      "path": "data/time-series-19-covid-combined.csv",
+      "profile": "tabular-data-resource",
+      "schema": {
+        "fields": [
+          {
+            "format": "%Y-%m-%d",
+            "name": "Date",
+            "type": "date"
+          },
+          {
+            "format": "default",
+            "name": "Country/Region",
+            "type": "string"
+          },
+          {
+            "format": "default",
+            "name": "Province/State",
+            "type": "string"
+          },
+          {
+            "decimalChar": ".",
+            "format": "default",
+            "groupChar": "",
+            "name": "Lat",
+            "type": "number"
+          },
+          {
+            "decimalChar": ".",
+            "format": "default",
+            "groupChar": "",
+            "name": "Long",
+            "type": "number"
+          },
+          {
+            "format": "default",
+            "groupChar": "",
+            "name": "Confirmed",
+            "title": "Cumulative total confirmed cases to date",
+            "type": "integer"
+          },
+          {
+            "format": "default",
+            "groupChar": "",
+            "name": "Recovered",
+            "title": "Cumulative total recovered cases to date",
+            "type": "integer"
+          },
+          {
+            "format": "default",
+            "groupChar": "",
+            "name": "Deaths",
+            "title": "Cumulative total deaths to date",
+            "type": "integer"
+          }
+        ],
+        "missingValues": [
+          "None",
+          ""
+        ]
+      }
+    },
+    {
+      "bytes": 3115,
+      "dialect": {
+        "delimiter": ",",
+        "doubleQuote": true,
+        "lineTerminator": "\r\n",
+        "quoteChar": "\"",
+        "skipInitialSpace": false
+      },
+      "encoding": "utf-8",
+      "format": "csv",
+      "hash": "929f08461485ca60bd2985c2e5804f80",
+      "name": "key-countries-pivoted",
+      "path": "data/key-countries-pivoted.csv",
+      "profile": "data-resource",
+      "schema": {
+        "fields": [
+          {
+            "format": "%Y-%m-%d",
+            "name": "Date",
+            "type": "date"
+          },
+          {
+            "description": "Cumulative total confirmed cases to date.",
+            "name": "China",
+            "type": "integer"
+          },
+          {
+            "description": "Cumulative total confirmed cases to date.",
+            "name": "US",
+            "type": "integer"
+          },
+          {
+            "description": "Cumulative total confirmed cases to date.",
+            "name": "United_Kingdom",
+            "type": "integer"
+          },
+          {
+            "description": "Cumulative total confirmed cases to date.",
+            "name": "Italy",
+            "type": "integer"
+          },
+          {
+            "description": "Cumulative total confirmed cases to date.",
+            "name": "France",
+            "type": "integer"
+          },
+          {
+            "description": "Cumulative total confirmed cases to date.",
+            "name": "Germany",
+            "type": "integer"
+          },
+          {
+            "description": "Cumulative total confirmed cases to date.",
+            "name": "Spain",
+            "type": "integer"
+          },
+          {
+            "description": "Cumulative total confirmed cases to date.",
+            "name": "Iran",
+            "type": "integer"
+          }
+        ],
+        "missingValues": [
+          "None",
+          ""
+        ]
+      }
+    },
+    {
+      "bytes": 354321,
+      "dialect": {
+        "delimiter": ",",
+        "doubleQuote": true,
+        "lineTerminator": "\r\n",
+        "quoteChar": "\"",
+        "skipInitialSpace": false
+      },
+      "encoding": "utf-8",
+      "format": "csv",
+      "hash": "3507c5407487eaf0a58ffa415966ec22",
+      "name": "countries-aggregated",
+      "path": "data/countries-aggregated.csv",
+      "profile": "data-resource",
+      "schema": {
+        "fields": [
+          {
+            "format": "%Y-%m-%d",
+            "name": "Date",
+            "type": "date"
+          },
+          {
+            "format": "default",
+            "name": "Country",
+            "type": "string"
+          },
+          {
+            "format": "default",
+            "groupChar": "",
+            "name": "Confirmed",
+            "title": "Cumulative total confirmed cases to date",
+            "type": "integer"
+          },
+          {
+            "format": "default",
+            "groupChar": "",
+            "name": "Recovered",
+            "title": "Cumulative total recovered cases to date",
+            "type": "integer"
+          },
+          {
+            "format": "default",
+            "groupChar": "",
+            "name": "Deaths",
+            "title": "Cumulative total deaths to date",
+            "type": "integer"
+          }
+        ],
+        "missingValues": [
+          "None",
+          ""
+        ]
+      }
+    },
+    {
+      "bytes": 3308,
+      "dialect": {
+        "delimiter": ",",
+        "doubleQuote": true,
+        "lineTerminator": "\r\n",
+        "quoteChar": "\"",
+        "skipInitialSpace": false
+      },
+      "encoding": "utf-8",
+      "format": "csv",
+      "hash": "57bd84415121b539c6d3e662800b7527",
+      "name": "worldwide-aggregated",
+      "path": "data/worldwide-aggregated.csv",
+      "profile": "data-resource",
+      "schema": {
+        "fields": [
+          {
+            "format": "%Y-%m-%d",
+            "name": "Date",
+            "type": "date"
+          },
+          {
+            "format": "default",
+            "groupChar": "",
+            "name": "Confirmed",
+            "title": "Cumulative total confirmed cases to date",
+            "type": "integer"
+          },
+          {
+            "format": "default",
+            "groupChar": "",
+            "name": "Recovered",
+            "title": "Cumulative total recovered cases to date",
+            "type": "integer"
+          },
+          {
+            "format": "default",
+            "groupChar": "",
+            "name": "Deaths",
+            "title": "Cumulative total deaths to date",
+            "type": "integer"
+          },
+          {
+            "decimalChar": ".",
+            "description": "Inrease rate from the previous day in percentage.",
+            "groupChar": "",
+            "name": "Increase rate",
+            "type": "number"
+          }
+        ],
+        "missingValues": [
+          "None",
+          ""
+        ]
+      }
+    }
+  ],
+  "title": "Novel Coronavirus 2019",
+  "views": [
+    {
+      "resources": [
+        "worldwide-aggregated"
+      ],
+      "spec": {
+        "group": "Date",
+        "series": [
+          "Confirmed",
+          "Deaths"
+        ],
+        "type": "line"
+      },
+      "specType": "simple",
+      "title": "Total world to date"
+    },
+    {
+      "resources": [
+        "key-countries-pivoted"
+      ],
+      "spec": {
+        "group": "Date",
+        "series": [
+          "China",
+          "US",
+          "United_Kingdom",
+          "Italy",
+          "France",
+          "Germany",
+          "Spain",
+          "Iran"
+        ],
+        "type": "line"
+      },
+      "specType": "simple",
+      "title": "Number of confirmed cases in key countries"
+    },
+    {
+      "resources": [
+        {
+          "name": "worldwide-aggregated",
+          "transform": [
+            {
+              "asFields": [
+                "Mortality rate"
+              ],
+              "expressions": [
+                "data['Deaths'] / data['Confirmed'] * 100 + '%'"
+              ],
+              "type": "formula"
+            }
+          ]
+        }
+      ],
+      "spec": {
+        "group": "Date",
+        "series": [
+          "Mortality rate"
+        ],
+        "type": "bar"
+      },
+      "specType": "simple",
+      "title": "Mortality rate in percentage"
+    },
+    {
+      "resources": [
+        "worldwide-aggregated"
+      ],
+      "spec": {
+        "group": "Date",
+        "series": [
+          "Increase rate"
+        ],
+        "type": "bar"
+      },
+      "specType": "simple",
+      "title": "Increase rate from previous day in confirmed cases worldwide"
+    }
+  ]
+}

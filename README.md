@@ -5,11 +5,12 @@ This repo takes the data from https://github.com/datasets/covid-19 to generate d
 # Usage
 
 In this section we describe the usage of the program:
-
+```
         usage: graph.py [-h] -c COUNTRIES [COUNTRIES ...] [-d DAYS] [-D DPI]
                 [-o OUTPUT] [-t TYPE_COL] [-v VIEW]
-
+```
 optional arguments:
+```
         -h, --help            show this help message and exit
         -c COUNTRIES [COUNTRIES ...], --countries COUNTRIES [COUNTRIES ...]
                         <Required> Set flag
@@ -20,7 +21,11 @@ optional arguments:
         -t TYPE_COL, --type_col TYPE_COL
                         Type of case: confirmed, recovered, deaths
         -v VIEW, --view VIEW  View result: yes(y) or no(n)
-
+```
 The following is the example of the generated png inside png folder:
+```
+        python3 graph.py -c Brazil US Italy -t deaths -v yes -d 40
+```
 
-        python3 graph.py -c Brazil US Italy -t deaths -v yes
+The output is the following:
+![](./png/Italy_US_Brazil_deaths.png)
