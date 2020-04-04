@@ -22,10 +22,18 @@ optional arguments:
                         Type of case: confirmed, recovered, deaths
         -v VIEW, --view VIEW  View result: yes(y) or no(n)
 ```
-The following is the example of the generated png inside png folder:
+The following is the example of the generated png inside png folder considering Brazil, US and Italy over 40 first days infected people:
 ```
-        python3 graph.py -c Brazil US Italy -t deaths -v yes -d 40
+        python3 graph.py -c Brazil US Italy -t confirmed -v yes -d 40
 ```
 
 The output is the following:
-![](./png/Italy_US_Brazil_deaths.png)
+![](./png/Italy_US_Brazil_confirmed.png)
+
+The following is the example of the generated png inside png folder considering Brazil, US and Italy over 40 first days infected people considering day by day difference::
+```
+        python3 graph.py -c Brazil US Italy -t confirmed -v yes -d 40 --diff y
+```
+
+The output is the following:
+![](./png/Italy_US_Brazil_confirmed_diff.png)
