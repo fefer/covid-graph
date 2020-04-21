@@ -7,6 +7,9 @@ BASE_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/css
 CONFIRMED = 'time_series_covid19_confirmed_global.csv'
 DEATH = 'time_series_covid19_deaths_global.csv'
 RECOVERED = 'time_series_covid19_recovered_global.csv'
+CONFIRMED_US = 'time_series_covid19_confirmed_US.csv'
+DEATH_US = 'time_series_covid19_deaths_US.csv'
+REFERENCE = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv'
 
 def to_normal_date(row):
     old_date = row['Date']
@@ -57,6 +60,11 @@ def pivot_key_countries(package):
     worldwide = next(resources)
     yield worldwide
 
+    us_confirmed = next(resources)
+    yield us_confirmed
+    us_deaths = next(resources)
+    yield us_deaths
+
 
 def calculate_increase_rate(package):
     package.pkg.descriptor['resources'][1]['schema']['fields'].append(dict(
@@ -78,6 +86,11 @@ def calculate_increase_rate(package):
             previous_row = row
             yield row
     yield process_rows(worldwide_data)
+
+    us_confirmed = next(resources)
+    yield us_confirmed
+    us_deaths = next(resources)
+    yield us_deaths
 
 def fix_canada_recovered_data(rows):
     expected = {
@@ -105,6 +118,8 @@ Flow(
       load(f'{BASE_URL}{CONFIRMED}'),
       load(f'{BASE_URL}{RECOVERED}'),
       load(f'{BASE_URL}{DEATH}'),
+      load(f'{BASE_URL}{CONFIRMED_US}'),
+      load(f'{BASE_URL}{DEATH_US}'),
       checkpoint('load_data'),
       unpivot(unpivoting_fields, extra_keys, extra_value),
       find_replace([{'name': 'Date', 'patterns': [{'find': '/', 'replace': '-'}]}]),
@@ -140,10 +155,13 @@ Flow(
       add_computed_field(
         target={'name': 'Deaths', 'type': 'number'},
         operation='format',
-        with_='{Case}'
+        with_='{Case}',
+        resources=['time_series_covid19_deaths_global']
       ),
-      delete_fields(['Case']),
+      delete_fields(['Case'], resources=['time_series_covid19_deaths_global']),
       update_resource('time_series_covid19_deaths_global', name='time-series-19-covid-combined', path='data/time-series-19-covid-combined.csv'),
+      update_resource('time_series_covid19_confirmed_US', name='us_confirmed', path='data/us_confirmed.csv'),
+      update_resource('time_series_covid19_deaths_US', name='us_deaths', path='data/us_deaths.csv'),
       update_schema('time-series-19-covid-combined', missingValues=['None', ''], fields=[
         {
         "format": "%Y-%m-%d",
@@ -196,7 +214,29 @@ Flow(
           "type": "integer"
         }
       ]),
+      update_schema('us_confirmed', missingValues=['None', '']),
+      update_schema('us_deaths', missingValues=['None', '']),
+      add_computed_field(
+        target={'name': 'Long', 'type': 'number'},
+        operation='format',
+        with_='{Long_}',
+        resources=['us_confirmed', 'us_deaths']
+      ),
+      add_computed_field(
+        target={'name': 'Country/Region', 'type': 'string'},
+        operation='format',
+        with_='{Country_Region}',
+        resources=['us_confirmed', 'us_deaths']
+      ),
+      add_computed_field(
+        target={'name': 'Province/State', 'type': 'string'},
+        operation='format',
+        with_='{Province_State}',
+        resources=['us_confirmed', 'us_deaths']
+      ),
+      delete_fields(['Long_','Country_Region','Province_State'], resources=['us_confirmed','us_deaths']),
       checkpoint('processed_data'),
+      printer(),
       # Sort rows by date and country
       sort_rows('{Country/Region}{Province/State}{Date}', resources='time-series-19-covid-combined'),
       # Duplicate the stream to create aggregated data
@@ -226,6 +266,7 @@ Flow(
             }
         )
       ),
+      printer(),
       update_schema('worldwide-aggregated', missingValues=['None', ''], fields=[
         {
           "format": "%Y-%m-%d",
@@ -320,6 +361,7 @@ Flow(
           "type": "integer"
         }
       ]),
+      printer(),
       checkpoint('processed_country_data'),
       # All countries aggregated
       duplicate(
@@ -329,6 +371,8 @@ Flow(
       ),
       pivot_key_countries,
       delete_fields(['Country', 'Confirmed', 'Recovered', 'Deaths'], resources='key-countries-pivoted'),
+      load(f'{REFERENCE}', name='reference'),
+      update_resource('reference', path='data/reference.csv'),
       # Prepare data package (name, title) and add views
       update_package(
         name='covid-19',
@@ -389,5 +433,6 @@ Flow(
             }
         ]
       ),
+      printer(),
       dump_to_path()
 ).results()[0]
